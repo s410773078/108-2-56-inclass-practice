@@ -1,0 +1,63 @@
+"1","
+"
+"1","  Binaries will be installed
+"
+"2","嘗試 URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/glue_1.3.1.zip'
+"
+"1","Warning in "
+"1",""
+"1","install.packages"
+"1",""
+"1"," :
+  "
+"1",""
+"1","cannot open URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/glue_1.3.1.zip': HTTP status was '404 Not Found'"
+"1",""
+"1","
+"
+"2","Error in download.file(url, destfile, method, mode = ""wb"", ...) : 
+  無法開啟 URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/glue_1.3.1.zip'
+"
+"1","Warning in "
+"1",""
+"1","install.packages"
+"1",""
+"1"," :
+  "
+"1",""
+"1","download of package ‘glue’ failed"
+"1",""
+"1","
+"
+"2","嘗試 URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/googlesheets4_0.1.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 180668 bytes (176 KB)
+"
+"2","downloaded 176 KB
+
+"
+"2","嘗試 URL 'https://cran.rstudio.com/bin/windows/contrib/3.6/tidyverse_1.3.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 440114 bytes (429 KB)
+"
+"2","downloaded 429 KB
+
+"
+"1","package ‘googlesheets4’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘tidyverse’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","The downloaded binary packages are in
+	C:\Users\User\AppData\Local\Temp\RtmpEF502a\downloaded_packages"
+"1",""
+"1","
+"
+"0","library(googlesheets4,tidyverse)"
+"2","錯誤: package or namespace load failed for ‘googlesheets4’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+ there is no package called ‘glue’
+"

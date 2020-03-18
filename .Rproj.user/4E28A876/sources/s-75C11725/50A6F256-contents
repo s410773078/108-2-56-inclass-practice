@@ -6,6 +6,7 @@ output: html_document
 
 ```{r}
 install.packages(c("googlesheets4","tidyverse"))
-library(googlesheets4,tidyverse)
+library(googlesheets4)
+library(tidyverse)
 ```
 
