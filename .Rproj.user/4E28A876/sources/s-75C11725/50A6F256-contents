@@ -2,11 +2,16 @@
 title: "3-18"
 output: html_document
 ---
-#package 3-18
 
+# package 3-18
 ```{r}
 install.packages(c("googlesheets4","tidyverse"))
 library(googlesheets4)
 library(tidyverse)
+```
+# create object
+```{r}
+a= 2
+a
 ```
 
