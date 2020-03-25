@@ -1,0 +1,29 @@
+---
+title: "3-25"
+output: html_document
+---
+
+```{r}
+vNum1 <- c(-1,5)
+vNum2 <- c(2,3)
+vNum3 <- c(vNum1,vNum2)
+vNum4 <- c(-1,5,2,3)
+vNum5 <- c(c(-1,5),c(2,3))
+a<- c(vNum1,vNum2,vNum3)
+
+```
+
+
+```{r}
+vNum4 <- c() # 空向量
+cat(a)
+print(a)
+is(a)
+typeof(a)
+#print 會出現序號/ cat 為連續/is 分開/typeof 一起
+```
+
+```{r}
+
+```
+
