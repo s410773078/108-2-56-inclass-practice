@@ -20,10 +20,15 @@ cat(a)
 print(a)
 is(a)
 typeof(a)
+factor(a)
 #print 會出現序號/ cat 為連續/is 分開/typeof 一起
 ```
 
 ```{r}
-
+library(httr)
+library(dplyr)
+GET("https://api.github.com/repos/s410773078/108-2-56-inclass-practice/commits") %>%
+  content() %>%
+  View()
 ```
 

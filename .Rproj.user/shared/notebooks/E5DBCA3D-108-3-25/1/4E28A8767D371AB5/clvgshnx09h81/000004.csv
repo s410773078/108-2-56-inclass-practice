@@ -1,0 +1,23 @@
+"0","library(httr)"
+"0","library(dplyr)"
+"2","Registered S3 method overwritten by 'dplyr':
+  method           from
+  print.rowwise_df     
+"
+"2","
+Attaching package: ．dplyr・
+
+"
+"2","The following objects are masked from ．package:stats・:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ．package:base・:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","GET(""https://api.github.com/repos/s410773078/108-2-56-inclass-practice/commits"") %>%"
+"0","  content() %>%"
+"0","  View()"

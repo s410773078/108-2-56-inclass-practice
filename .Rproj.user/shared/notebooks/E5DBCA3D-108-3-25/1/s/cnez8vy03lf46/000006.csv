@@ -3,6 +3,5 @@
 "0","vNum3 <- c(vNum1,vNum2)"
 "0","vNum4 <- c(-1,5,2,3)"
 "0","vNum5 <- c(c(-1,5),c(2,3))"
-"0","c(vNum1,vNum2,vNum3)=a"
-"2","Error in c(vNum1, vNum2, vNum3) = a : 沒有這個函數 ""c<-""
-"
+"0","a<- c(vNum1,vNum2,vNum3)"
+"0",""
