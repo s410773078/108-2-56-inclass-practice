@@ -82,8 +82,32 @@ print(`108學年第2學期`)
   
   )
 小明課表
-
-
 ```
 
+```{r}
+library(lubridate)
+`commit`=list(
+  name= list("Martin","emilyluckey"),
+  email= list("mtlin@gm.ntpu.edu.tw","emily007@gmail.com"),
+  date= ymd_hms("2020-03-25T07:17:40Z","2020-03-26T08:18:40Z"),
+  msg= list("#Author","update")
+)
+commit
+```
+
+```{r}
+`小明成績`=list(
+  學期=list(
+    上=list(
+      課=list("個體經濟學","總體經濟學"),
+      老師=list("Alice","Mark"),
+      分數=list(85,73)),
+    下=list(
+      課=list("作業研究"),
+      老師=list("Jason"),
+      分數=(90))
+  )
+)
+小明成績
+```
 
