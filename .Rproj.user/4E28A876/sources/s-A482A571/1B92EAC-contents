@@ -1,0 +1,89 @@
+---
+title: "2020-04-05"
+output: html_notebook
+---
+
+
+```{r}
+dialogue <- c('小明說："明天不用上課。"',
+               '小花說："真的嗎？"')
+
+cat(dialogue, sep="\n")
+```
+
+```{r}
+num <- c(1.5, 2, 3)
+int <- c(1L, 3L, -2L)
+char <- c("1.5","2","3")
+logi <- c(T,T,F)
+
+typeof(num)
+typeof(int)
+typeof(char)
+typeof(logi)
+```
+
+```{r}
+#時間向量
+ymd_hms(
+  字串向量
+)
+```
+
+```{r}
+# 10位學生的主系
+majors10_char <- c('經濟學系','社會學系','社會學系','經濟學系','經濟學系','社會學系','經濟學系','經濟學系','經濟學系','社會學系')
+
+typeof(majors10_char)
+class(majors10_char)
+```
+
+```{r}
+library(lubridate)
+try=
+  ymd_hms(
+    c("2020-03-04T06:56:29Z","2020-03-11 14:16:43","2020-03-11 14:34:33"),
+    tz="Asia/Taipei")
+class(try)
+with_tz(try,tz="Europe/Paris")
+```
+```{r}
+library(lubridate)
+`小明購買紀錄`=list(
+      ymd_hms("2020-03-31T13:40:55Z"),
+      "一芳",
+      2,
+      "水果茶"
+  
+)
+小明購買紀錄
+```
+
+```{r}
+# list含兩個lists, 子層list又各含兩個vectors
+`小明108學年課表C` <- list(
+  `108學年第1學期`=list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  `108學年第2學期`=list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`108學年第2學期`)
+```
+
+
+```{r}
+`小明課表`=list(
+  `上`=list("高級會計學","高等統計學"),
+  `下`=(list("食在拉丁美洲"))
+  
+  )
+小明課表
+
+
+```
+
+
