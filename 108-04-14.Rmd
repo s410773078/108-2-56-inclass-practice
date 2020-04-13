@@ -1,0 +1,76 @@
+---
+title: "04-14"
+output: html_document
+---
+
+```{r}
+library(jsonlite)
+fromJSON("https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json", simplifyDataFrame = F) -> tainanSportsMap
+length(tainanSportsMap)
+tainanSportsMap[[1]]
+tainanSportsMap[[1076]]
+tainanSportsMap$`台南市立游泳池`
+```
+```{r}
+listExample <- 
+  list(
+    student="小明",
+    `學期`=list(
+      `108-1`=list(
+        list(
+          name="個體經濟學",
+          teacher="Alice",
+          grade=85
+        )
+      ),
+      `108-2`=list(
+        list(
+          name="總體經濟學",
+          teacher="Mark",
+          grade=78
+        )
+      )
+    )
+  )
+
+listExample$`學期`
+```
+
+```{r}
+fromJSON("http://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000157-002",
+         simplifyDataFrame = F) -> newTaipeiCityVaccine
+names(newTaipeiCityVaccine)
+newTaipeiCityVaccine$result
+```
+
+```{r}
+vectorExample=c("a","b","c")
+vectorExample[c(1,3)]
+vectorExample[c(3,2,1)] # 產生重新排列效果
+str(listExample, max.level=2)
+```
+
+```{r}
+names(listExample)
+tainanSportsMap[c(1,5,605,888)]
+listExample[c("學期","student")]
+```
+
+```{r}
+fromJSON("https://www.dropbox.com/s/qnm9bnz7vccrvcz/taipeiNightMarkets.json?dl=1", simplifyDataFrame = F) -> taipeiNightMarkets
+names(taipeiNightMarkets)
+selectedmarkets= c(T,F,F,F,T,F,F,F,F,T,F,F,F,T)
+str(taipeiNightMarkets[selectedmarkets], max.level=1)
+```
+
+```{r}
+rep(F,14) -> testselected
+ #reapeat
+testselected[c(1,5,10,14)] <- T
+str(taipeiNightMarkets[testselected],max.level=1)
+
+```
+
+
+
+

@@ -1,0 +1,11 @@
+"0","knitr::opts_chunk$set(echo = F, eval=F)"
+"0","library(lubridate); library(jsonlite); library(readr)"
+"2","
+Attaching package: ．lubridate・
+
+"
+"2","The following object is masked from ．package:base・:
+
+    date
+
+"

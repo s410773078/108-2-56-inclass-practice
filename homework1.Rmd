@@ -1,0 +1,227 @@
+---
+title: "homework 1"
+output: html_document
+params:
+  studentName: "林柏然"
+  studentID: "410773078"
+---
+
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 有些同學可能家裡電腦不是utf-8設定，為防萬一，請於存檔時使用：File > save with enconding, 然後選utf-8
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+  
+> 每次作業滿分10分：有寫作業於期限內上傳得3分，剩餘7分依作業準確率決定最後得分多寡，除非該題另有規定。
+
+> 前述存檔與frontmatter要求缺任何一個則扣1分。
+
+請先執以下code chunk, 引入所需packages，答案禁止引用其他套件（Package）。
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, eval=F)
+library(lubridate); library(jsonlite); library(readr)
+```
+
+# 題目
+
+## 1 作業需知（此題佔2分）
+請看完[遠距學習Q&A](https://vimeo.com/showcase/6955130)裡的三部短片：  
+  * 如何收取作業通知內容及作業檔下  
+  * 如何交作業和重新繳交作業  
+  * 作業/考試Rmd檔寫作規範  
+並完成[Google表單測驗題](https://forms.gle/KGcnWeVFE3w6mkU56)
+
+## 2 Date/Time
+
+### 2.1 出現以下訊息需要執行什麼指令：
+"Error in library(lubridate) : there is no package called ‘lubridate’"
+
+```{r ans21c}
+install.packages(c(library(lubridate)))
+```
+
+### 2.2
+執行以下程式可以分別得到兩個時間：
+```{r data22}
+taiwan_time <- "西元2019年4月12日 12點55分30秒"
+oslo_time <- "18.11.2018 15:33:02"
+two_times=list(taiwan_time,oslo_time)
+print(taiwan_time,sep="\n")
+```
+
+其中taiwan_time為台灣時間，oslo_time為挪威Oslo時間。請將兩個時間存在一個atomic vector叫two_times的物件裡，且為Date/Time class（即POSIXct POSIXt class）。
+
+```{r ans22}
+ymd_hms(two_times,tz="UTC")
+two_times
+```
+
+### 2.3
+將two_times改成美國Chicago時間顯示的two_times_chicago：
+
+```{r ans23}
+two_times_chicago= ymd_hms(two_times,tz="America/Chicago")
+two_times_chicago
+```
+
+## 3 List
+
+### 3.1
+小明修課清單中有**會計學**，**3**學分，**必**修，上課時地為每個**星期三**的**7 8 9**節在**商2F05**教室，目前清單上出現**已核準**。請完成物件course，讓str(course)會顯示:  
+```
+List of 2
+ $ approve: logi TRUE
+ $ course :List of 4
+  ..$ coursename: chr "會計學"
+  ..$ type      : chr "必"
+  ..$ credits   : num 3
+  ..$ time_place:List of 1
+  .. ..$ :List of 3
+  .. .. ..$ weekday   : chr "星期三"
+  .. .. ..$ time_slots: num [1:3] 7 8 9
+  .. .. ..$ classroom : chr "商2F05"
+```
+
+其中approve（核準狀況，logics class），course_info(課程資訊), coursename(課名), type（類別，必/選/通）, credits（學分數, numeric class）, time_place（上課時地）, weekday（星期）, time_slots（節次, numeric class）, classroom（教室）的意思如（）內容所示。
+
+```{r ans31}
+course=
+list(
+  list(approve= T,
+       course=list(
+         coursename="會計學",
+         type= "必",
+         Credits=3,
+         time_place=list(list(weekday="星期三",
+                              time_slots=7,8,9,
+                              classroom="商2F05"))
+       ))
+)
+str(course)
+course
+```
+
+### 3.2
+依上題架構，若該課的上課時間分兩個時間，地點不變：
+
+  * 每星期三78節；及  
+  * 每星期二5節
+  
+你要怎麼修改你的course物件內容讓裡頭的time_slots可以有兩個時段及地點，答案物件為courseUpdate。courseUpdate內容只有time_place與course不同，其餘元素值維持與course相同內容。
+
+```{r ans32}
+courseUpdate=
+list(
+  list(approve= T,
+       course=list(
+         coursename="會計學",
+         type= "必",
+         Credits=3,
+         time_place=list(list(weekday="星期三",
+                              time_slots=7,8,9,
+                              classroom="商2F05"),
+                         list(weekday="星期二",
+                              time_slots=5,
+                              classroom="商2F05"))
+       ))
+)
+
+courseUpdate
+```
+
+### 3.3
+連到以下政府資料開放平台，每月新北市A1類道路交通事故－原因及傷亡：
+https://data.gov.tw/dataset/26722
+
+挑出103年1月板橋分局、海山分局的A1類道路交通事故－原因及傷亡，原因請填寫資料集描述(  )內的文字而非field1-field16、other等字眼。 接著完成一個有以下結構的答案物件accidents，  
+```
+List of 2
+ $ time   : Date[1:1], format:  ...
+ $ bureaus:List of 2
+  ..$ 板橋分局:List of 2
+  .. ..$ type      : chr 
+  .. ..$ casualties: num 
+  ..$ 海山分局:List of 2
+  .. ..$ type      : chr 
+  .. ..$ casualties: num 
+```   
+其中  
+  * time是103年1月1日以西元年月日表示的Date class。  
+  * type是事故原因。  
+  * casualties是偒亡人數。  
+
+此list資訊自行目測找出正確資訊手動輸入即可，此題考驗同學是否有讀懂此平台資料說明的能力。
+
+可用str(accidents)來檢查你的答案是否有符合格式。
+```{r ans33}
+library(jsonlite)
+rawaccidents=fromJSON("https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000328-002")
+names(rawaccidents)
+rawaccidents[c("suuccess","result")]
+str(rawaccidents)
+rawaccidents$result$records$organ$c(1,2)
+```
+## 4 Factor
+
+小明的果汁店每位客人會買的果汁落在1-10杯間，因為每次發票上的數字只在1-10這10類重複出現，所以小明認定它是類別資料而用factor class來存下一天的所有銷售。以下程式執行後會隨機抽出小明輸入的5筆訂單果汁杯數，並存在fiveReceipts這個factor物件裡。
+
+```{r data4}
+source("https://www.dropbox.com/s/bvs0m4oxw7yaqxw/108-2-hw1-3.R?dl=1")
+fiveReceipts <- .randomReceipts(n=5)
+```
+
+### 4.1
+用levels()函數來顯示fiveReceipts有那幾個levels，並把回傳的結果值存在levels_fiveReceipts. 
+
+```{r ans41}
+# levels_fiveReceipts
+```
+### 4.2
+使用as.integer()函數來顯示fiveReceipts在電腦的存法，並把回傳的結果值存在storage_fiveReceipts. 
+```{r ans42}
+# storage_fiveReceipts
+```
+
+### 4.3
+使用as.character()函數將fiveReceipts在螢幕顯示的表面值改成字串，並把回傳的結果值存在chr_fiveReceipts.
+```{r ans43}
+# chr_fiveReceipts
+```
+### 4.4
+若我們想要把fiveReceipts的螢幕顯示值用sum()函數加總，在只使用as.{class name}函數下，要怎麼做？把sum完的結果存在sum_fiveReceipts。
+```{r ans44}
+# sum_fiveReceipts
+```
+
+## 5
+請先執行以下程式： 
+```{r data5}
+# 啟動一個乾淨空的R環境
+source("https://www.dropbox.com/s/xtge2ghfb7dhple/108-2-hw1-4.R?dl=1") 
+# 除了Global environment會清空，之前引入的套件也會被移除
+```
+
+接著修正以下程式的錯誤，修正時請注意：
+
+  * 維持目前每行順序  
+  * 找出有錯誤的行，直接把它更正，更正時不要隨意斷句徒增新行。
+
+```{r ans5c, eval=F}
+yy <- 2020
+mm <- "Mar"
+dd <- 15
+event_list <- list(
+  time=ymd(paste0(yy,mm,dd)),
+  list(
+    name="小明",
+    `是否完`=T,
+    `完成所花時間(秒)`=350,
+    tools=c(
+      "anchor","axe")
+))
+```
+

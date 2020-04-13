@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586798240504.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "98F97A00",
+    "lastKnownWriteTime" : 2318841573653753390,
+    "last_content_update" : 1586798240504,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "id" : "c5f3ceff51fb488196d8412ba3c6de93",
+        "name" : "rawaccidents",
+        "title" : "rawaccidents"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "object_explorer"
+}
