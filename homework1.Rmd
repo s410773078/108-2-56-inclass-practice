@@ -163,7 +163,11 @@ rawaccidents=fromJSON("https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A
 names(rawaccidents)
 rawaccidents[c("suuccess","result")]
 str(rawaccidents)
-rawaccidents$result$records$organ$c(1,2)
+rawaccidents$result -> `layerresult`
+layerresult$records -> `layerrecords`
+layerrecords$organ[c(1,2)] -> `stationname`
+layerresult$fields -> `layerfields`
+
 ```
 ## 4 Factor
 
@@ -178,18 +182,22 @@ fiveReceipts <- .randomReceipts(n=5)
 用levels()函數來顯示fiveReceipts有那幾個levels，並把回傳的結果值存在levels_fiveReceipts. 
 
 ```{r ans41}
-# levels_fiveReceipts
+levels(fiveReceipts) -> `levels_fiveReceipts`
+
+levels_fiveReceipts
 ```
 ### 4.2
 使用as.integer()函數來顯示fiveReceipts在電腦的存法，並把回傳的結果值存在storage_fiveReceipts. 
 ```{r ans42}
-# storage_fiveReceipts
+as.integer((levels_fiveReceipts))-> storage_fiveReceipts
+storage_fiveReceipts
 ```
 
 ### 4.3
 使用as.character()函數將fiveReceipts在螢幕顯示的表面值改成字串，並把回傳的結果值存在chr_fiveReceipts.
 ```{r ans43}
-# chr_fiveReceipts
+as.character(storage_fiveReceipts)->chr_fiveReceipts
+chr_fiveReceipts
 ```
 ### 4.4
 若我們想要把fiveReceipts的螢幕顯示值用sum()函數加總，在只使用as.{class name}函數下，要怎麼做？把sum完的結果存在sum_fiveReceipts。

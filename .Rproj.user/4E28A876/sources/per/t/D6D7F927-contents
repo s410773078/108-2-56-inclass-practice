@@ -71,6 +71,14 @@ str(taipeiNightMarkets[testselected],max.level=1)
 
 ```
 
+```{r}
+numVector <- c(2,3,6,-1,4,2,6)
+select1 <- numVector[c(1,4)]; select1
+select2 <- select1[[1]]; select2
+
+# 相當於
+numVector[c(1,4)][[1]]
+```
 
 
 
