@@ -1,0 +1,147 @@
+---
+title: "homework 2"
+output: html_document
+params:
+  studentName: "你的名字"
+  studentID: "你的學號"
+---
+
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 有些同學可能家裡電腦不是utf-8設定，為防萬一，請於存檔時使用：File > save with enconding, 然後選utf-8
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+  
+> 每次作業滿分10分：有寫作業於期限內上傳得3分，剩餘7分依作業準確率決定最後得分多寡，除非該題另有規定。
+
+> 前述存檔與frontmatter要求缺任何一個則扣1分。
+
+請先執以下code chunk, 引入所需packages，答案禁止引用其他套件（Package）。
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, eval=F)
+library(jsonlite)
+```
+
+# 題目
+
+## 1 「送分題」走過路過不要錯過喔
+執行以下程式可以得到叫做pi的vector物件:
+```{r data1}
+pi <- c(3,1,4,1,5,9,2,6,5,3,5)
+```
+
+請取出pi的第8個數字並儲存到叫做gift的物件。
+```{r ans1}
+# gift
+```
+
+## 2 「延續題」接續上次的作業內容
+在上次的作業1中，我們製作了course這個list物件執行以下程式可以得到上次的答案物件course:
+```{r data2}
+fromJSON("https://www.dropbox.com/s/uday7x99k9q9sxm/course.json?dl=1", simplifyDataFrame = T) -> course
+```
+
+### 2.1 特定物件取出
+請取出course中time_place的資料儲存到叫做time_place的list物件。
+```{r ans21}
+# time_place
+```
+
+### 2.2 特定物件改寫
+經濟系系辦終於發現會計不應該是屬於社會科學的經濟系的必修課了，可喜可賀!可喜可賀!
+
+另外，系辦也意外發現核準狀況（approve）的class被錯誤設定成了character。
+
+你要做的是有兩件:
+  1. 請幫系辦把course裡會計學的修課屬性改成"選"
+  2. 把approve的class改成正確的class
+
+最後請將改好的結果存到叫做course_update的list物件。
+
+提示:
+只有type不一樣，其他內容都和course一樣喔!至於approve正確的class是甚麼請查看其內容自行判斷。
+```{r ans22}
+# course_update
+```
+
+### 2.3 新增特定物件
+系辦決定在修課資料加上授課教師的名字，請在course_update的course資料中新增teacher欄位，授課教師是紀學檜老師，把改完的結果存到course_update2。
+```{r ans23}
+# course_update2
+```
+
+## 3 「應用題」一起成為神奇寶貝大師(或者洛托姆)吧!
+小智想要成為神奇寶貝大師，但他發現他的神奇寶貝圖鑑出了故障無法查詢，已知錯誤的只有查詢功能而資料正確，讓我們一起來幫助小智得到聯盟賽冠軍吧!
+
+請先執行此chunk讀入神奇寶貝資料(Gamemaster)並觀察該資料
+```{r data3}
+fromJSON("https://www.dropbox.com/s/3of3hxzt86oyci8/Gamemaster.json?dl=1", simplifyDataFrame = F) -> Gamemaster
+```
+
+### 3.1 特定物件取出
+小智想要知道關於皮卡丘的資料，已知皮卡丘屬於Gamemaster紀錄的730隻pokemon中的第27隻pokemon，請取出皮卡丘的相關資料並存在叫做Pikachu的list物件。
+
+提示:
+看懂題目是關鍵!str(Pikachu)的結果應該是:
+```
+List of 9
+ $ dex         : int 25
+ $ speciesName : chr "Pikachu"
+ $ speciesId   : chr "pikachu"
+ $ baseStats   :List of 3
+  ..$ atk: int 112
+  ..$ def: int 96
+  ..$ hp : int 111
+ $ types       : chr [1:2] "electric" "none"
+ $ fastMoves   : chr [1:3] "PRESENT" "QUICK_ATTACK" "THUNDER_SHOCK"
+ $ chargedMoves: chr [1:5] "DISCHARGE" "SURF" "THUNDER" "THUNDERBOLT" ...
+ $ legacyMoves : chr [1:3] "PRESENT" "SURF" "THUNDER"
+ $ defaultIVs  :List of 2
+  ..$ cp1500: int [1:4] 40 15 15 15
+  ..$ cp2500: int [1:4] 40 15 15 15
+```
+```{r ans31}
+# Pikachu
+```
+
+### 3.2 特定物件取出&class調整
+已知神奇寶貝的基礎能力值(baseStats)包含atk、def和hp，請取出皮卡丘的這三項資料並存在名為Pikachu_stats的vector物件，並令該物件的class為numeric。
+
+提示:
+記得class怎麼改嗎?vector內容請按照「atk、def、hp」這樣的順序喔。
+```{r ans32}
+# Pikachu_stats
+```
+
+### 3.3 特定物件改寫&特定物件取出
+小智查詢對戰對手胖丁的資料，已知胖丁屬於Gamemaster紀錄的730隻pokemon中的第46隻pokemon，但他意外發現胖丁的名字(speciesName)被誤植成了布丁(Pudding)，請幫他把胖丁的名字(speciesName)改成正確的名字Jigglypuff。
+最後跟3.1一樣，將胖丁的相關資料並存在叫做Jigglypuff的list物件。
+
+```{r ans33}
+# Jigglypuff
+```
+
+### 3.4 魔王題——考驗自己有沒有成為程式設計大師/洛托姆的時候到了
+小智在旅行中發現了新品種的神奇寶貝——謎你Q。
+以下是已知關於謎你Q的資料:
+
+神奇寶貝圖鑑編號(dex): 778
+神奇寶貝名字(speciesName): Mimikyu
+神奇寶貝ID(speciesId): mimikyu
+屬性(types): 幽靈(ghost)和妖精(fairy)
+
+此外，謎你Q的基礎能力值(baseStats)和皮卡丘一樣；三種技能(fastMoves、chargedMoves、legacyMoves)和胖丁一樣;默認IV(defaultIVs)則三隻都一樣。
+
+請幫小智把謎你Q的資料新增到Gamemaster，成為圖鑑上的第731隻pokemon。
+
+提示:
+注意Mimikyu的各種資料格式都應該要跟Pikachu、Jigglypuff他們一樣喔。
+```{r ans34}
+# Gamemaster
+```
+
+# 恭喜你寫完了!最後記得回去檢查注意事項有沒有都做到，避免被白扣分喔~
