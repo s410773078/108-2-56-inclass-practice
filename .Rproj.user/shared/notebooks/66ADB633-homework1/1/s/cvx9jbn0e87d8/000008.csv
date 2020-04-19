@@ -1,6 +1,8 @@
-"0","typeof(two_times)
+"0","ymd_hms(two_times,tz=""UTC"")
 "
+"2"," 2 failed to parse."
 "1","[1]"
-"1"," ""list"""
+"1"," NA"
+"1"," NA"
 "1","
 "

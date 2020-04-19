@@ -2,8 +2,8 @@
 title: "homework 2"
 output: html_document
 params:
-  studentName: "林柏然"
-  studentID: "410773078"
+  studentName: "你的名字"
+  studentID: "你的學號"
 ---
 
 # 注意事項
@@ -36,7 +36,7 @@ pi <- c(3,1,4,1,5,9,2,6,5,3,5)
 
 請取出pi的第8個數字並儲存到叫做gift的物件。
 ```{r ans1}
-pi[[8]] -> gift
+pi[8] -> gift
 gift
 ```
 
@@ -50,7 +50,7 @@ fromJSON("https://www.dropbox.com/s/uday7x99k9q9sxm/course.json?dl=1", simplifyD
 請取出course中time_place的資料儲存到叫做time_place的list物件。
 ```{r ans21}
 str(course)
-time_place <- course[["course"]][["time_place"]]
+course[["course"]][["time_place"]] -> time_place
 time_place
 ```
 
@@ -69,19 +69,14 @@ time_place
 只有type不一樣，其他內容都和course一樣喔!至於approve正確的class是甚麼請查看其內容自行判斷。
 ```{r ans22}
 str(course)
-course[["approve"]]<-(T)
-course[["course"]][["type"]] <- "選"
-course_update <- course
+
 course_update
 ```
 
 ### 2.3 新增特定物件
 系辦決定在修課資料加上授課教師的名字，請在course_update的course資料中新增teacher欄位，授課教師是紀學檜老師，把改完的結果存到course_update2。
 ```{r ans23}
-str(course_update)
-course_update[[2]]$teacher <- "紀學檜"
-course_update2 <- course_update
-str(course_update2)
+# course_update2
 ```
 
 ## 3 「應用題」一起成為神奇寶貝大師(或者洛托姆)吧!
@@ -115,9 +110,7 @@ List of 9
   ..$ cp2500: int [1:4] 40 15 15 15
 ```
 ```{r ans31}
-str(Gamemaster)
-Gamemaster[["pokemon"]][[27]] -> Pikachu
-Pikachu
+# Pikachu
 ```
 
 ### 3.2 特定物件取出&class調整
@@ -126,8 +119,7 @@ Pikachu
 提示:
 記得class怎麼改嗎?vector內容請按照「atk、def、hp」這樣的順序喔。
 ```{r ans32}
-as.numeric(Pikachu[["baseStats"]]) -> Pikachu_stats
-Pikachu_stats
+# Pikachu_stats
 ```
 
 ### 3.3 特定物件改寫&特定物件取出
@@ -135,9 +127,7 @@ Pikachu_stats
 最後跟3.1一樣，將胖丁的相關資料並存在叫做Jigglypuff的list物件。
 
 ```{r ans33}
-Gamemaster[["pokemon"]][[46]]$speciesName <-"Jigglypuff"
-Gamemaster[["pokemon"]][[46]] -> Jigglypuff
-Jigglypuff
+# Jigglypuff
 ```
 
 ### 3.4 魔王題——考驗自己有沒有成為程式設計大師/洛托姆的時候到了
@@ -156,17 +146,7 @@ Jigglypuff
 提示:
 注意Mimikyu的各種資料格式都應該要跟Pikachu、Jigglypuff他們一樣喔。
 ```{r ans34}
-Gamemaster[["pokemon"]][[731]]<- Pikachu
-new=Gamemaster[["pokemon"]][[731]]
-str(new)
-new$dex <-778
-new$speciesName<- "Mimikyu"
-new$speciesId<- "mimikyu"
-new$types<- c("ghost","fairy")
-new$chargedMoves <- Gamemaster[["pokemon"]][[46]]$chargedMoves
-new$defaultIVs <- Gamemaster[["pokemon"]][[46]]$defaultIVs
-str(new)
-Gamemaster
+# Gamemaster
 ```
 
 # 恭喜你寫完了!最後記得回去檢查注意事項有沒有都做到，避免被白扣分喔~

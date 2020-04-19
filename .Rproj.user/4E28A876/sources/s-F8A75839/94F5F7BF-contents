@@ -41,7 +41,7 @@ library(lubridate); library(jsonlite); library(readr)
 "Error in library(lubridate) : there is no package called ‘lubridate’"
 
 ```{r ans21c}
-install.packages(c(library(lubridate)))
+install.packages(c("lubridate"))
 ```
 
 ### 2.2
@@ -49,14 +49,17 @@ install.packages(c(library(lubridate)))
 ```{r data22}
 taiwan_time <- "西元2019年4月12日 12點55分30秒"
 oslo_time <- "18.11.2018 15:33:02"
-two_times=list(taiwan_time,oslo_time)
+two_times=c(taiwan_time,oslo_time)
 print(taiwan_time,sep="\n")
 ```
 
 其中taiwan_time為台灣時間，oslo_time為挪威Oslo時間。請將兩個時間存在一個atomic vector叫two_times的物件裡，且為Date/Time class（即POSIXct POSIXt class）。
 
 ```{r ans22}
-ymd_hms(two_times,tz="UTC")
+library(lubridate)
+taiwan_time <- "2019-04-12 12:55:30"
+oslo_time <- "2018-11-18 15:33:02"
+ymd_hms(c(taiwan_time,oslo_time)) -> two_times
 two_times
 ```
 
@@ -160,14 +163,11 @@ List of 2
 ```{r ans33}
 library(jsonlite)
 rawaccidents=fromJSON("https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000328-002")
-names(rawaccidents)
-rawaccidents[c("suuccess","result")]
 str(rawaccidents)
-rawaccidents$result -> `layerresult`
-layerresult$records -> `layerrecords`
-layerrecords$organ[c(1,2)] -> `stationname`
-layerresult$fields -> `layerfields`
-
+rawaccidents[["result"]][["fields"]][["records"]] -> layerrecords
+time=rawaccidents[["result"]][["fields"]][["records"]][["yearmonth"]]
+time
+rawaccidents[["result"]][["fields"]][["records"]]
 ```
 ## 4 Factor
 
