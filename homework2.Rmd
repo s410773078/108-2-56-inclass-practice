@@ -156,17 +156,18 @@ Jigglypuff
 提示:
 注意Mimikyu的各種資料格式都應該要跟Pikachu、Jigglypuff他們一樣喔。
 ```{r ans34}
-Gamemaster[["pokemon"]][[731]]<- Pikachu
-new=Gamemaster[["pokemon"]][[731]]
-str(new)
-new$dex <-778
-new$speciesName<- "Mimikyu"
-new$speciesId<- "mimikyu"
-new$types<- c("ghost","fairy")
-new$chargedMoves <- Gamemaster[["pokemon"]][[46]]$chargedMoves
-new$defaultIVs <- Gamemaster[["pokemon"]][[46]]$defaultIVs
-str(new)
-Gamemaster
+Pikachu -> mimikyu
+str(Pikachu)
+mimikyu[["speciesName"]] <- "Mimikyu"
+mimikyu[["speciesId"]] <- "mimikyu"
+mimikyu[["types"]] <- c("ghost","fairy")
+mimikyu[["chargedMoves"]] <- Jigglypuff[["chargedMoves"]]
+mimikyu[["fastMoves"]] <- Jigglypuff[["fastMoves"]]
+mimikyu[["legacyMoves"]] <- Jigglypuff[["legacyMoves"]]
+mimikyu[["dex"]] <- as.integer(778)
+Gamemaster[[731]] <- mimikyu
+Gamemaster[[731]]
+str(mimikyu)
 ```
 
 # 恭喜你寫完了!最後記得回去檢查注意事項有沒有都做到，避免被白扣分喔~
