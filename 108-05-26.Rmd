@@ -1,0 +1,254 @@
+```{r}
+install.packages("lubridate")
+```
+
+
+```{r}
+example <- list(
+  name=c("小明","小花","小新","美美"),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c("1998-03-11","1999-12-22","1995-08-22","2001-10-10")),
+  hobby=c("美食 旅遊","旅遊 時尚","3C 美食","音樂 旅遊"),
+  residence=c("Taipei","New Taipei","Taichung","Kaohsiung"),
+  allowance=factor(c("0-1000","1001-2000","2000+","1001-2000"),ordered = T),
+  bloodType=c("A","B","B","O")
+)
+
+above_170 <- example$height>=170
+example$name[above_170]
+
+```
+
+```{r}
+pick_lovefood <- str_detect(example$hobby,"美食")
+pick_B <- example$bloodType== "B"
+example$name[pick_lovefood&pick_B]
+```
+
+```{r}
+pick_1998 <- example$birthday >= lubridate::ymd("1998-01-01")
+example$name[pick_big_taipei]
+example$name[pick_1998&!pick_big_taipei]
+example$name[pick_1998&pick_big_taipei&pick_B]
+```
+
+
+```{r}
+print(example[c("name","hobby")])
+pick_lovefood <- stringr::str_detect(example$hobby,"美食")
+example$name[pick_lovefood]
+```
+
+```{r}
+example$name[is.na(example$weight)]
+```
+
+
+```{r}
+big_taipei<- c("New Taipei","Taipei")
+pick_big_taipei<- example$residence%in%big_taipei
+example$name[pick_big_taipei]
+```
+
+```{r}
+example$bloodType
+B_blood <- example$bloodType=="B"
+example$name[B_blood]
+```
+
+```{r}
+example$allowance
+above_10<- example$allowance>"0-1000"
+example$name[above_10]
+
+```
+
+
+```{r}
+after_1998 <- example$birthday>=lubridate::ymd("1998-01-01")
+example$name[after_1998]
+```
+
+```{r}
+source("https://www.dropbox.com/s/qsrw069n94k61lj/transcript100to103_list.R?dl=1")
+```
+```{r}
+str(transcript100to103)
+above_85 <- transcript100to103$成績>=85
+table(transcript100to103$學屆[above_85])
+sum(transcript100to103$學屆[above_85],na.rm=T)
+```
+
+```{r}
+str(transcript100to103)
+pick_lawbusiness <- c("法學院","'商學院")
+pick_fromlawbusiness<-transcript100to103$學院%in%pick_lawbusiness
+transcript100to103$成績[pick_fromlawbusiness]
+transcript100to103$成績
+```
+
+
+```{r}
+source("https://www.dropbox.com/s/16h6ggua6qtydci/exchangeRate.R?dl=1")
+str(exchangeRate)
+```
+
+```{r}
+pick_1998<-exchangeRate$期間>=lubridate::ymd("1998-01-01")
+exchangeRate$匯率[pick_1998]
+str(exchangeafter_98)
+exchangeafter_98<-list(
+  `期間`=exchangeRate$期間[pick_1998],
+  `幣別`=exchangeRate$幣別[pick_1998],
+  `匯率`=exchangeRate$匯率[pick_1998]
+)
+```
+
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/3uijub7xheib405/list_victimAges_female.json?dl=1", simplifyDataFrame = F) -> list_victimAges_female
+```
+
+```{r}
+sum(is.na(list_victimAges_female$數目))
+```
+
+```{r}
+str(list_victimAges_female)
+list_victimAges_female$年齡層<-as.factor(list_victimAges_female$年齡層)
+list_victimAges_female$數目<- as.integer(list_victimAges_female$數目)
+```
+
+```{r}
+levels(list_victimAges_female$年齡層)->original_level
+str(original_level)
+new_level<-c(original_level[c(12,13,1,8,2:7,9:11)])
+levels(list_victimAges_female$年齡層)<-new_level
+
+
+ordered(list_victimAges_female$年齡層)
+list_victimAges_female$年齡層<-ordered(list_victimAges_female$年齡層)
+above_30<-list_victimAges_female$年齡層>="30_39歲"
+sum(list_victimAges_female$數目[above_30],na.rm=T)
+```
+
+```{r}
+myNum <- c(1,5,9,3,5,2,4,6,2,8,2)
+pick_even <-(myNum%%2)==0
+sum(myNum[pick_even])
+```
+
+```{r}
+x2 <- c(1,NA,10)
+y2 <- c(-1,NA,20)
+
+x3 <- c(NA,"小花")
+y3 <- c(NA,"小華")
+```
+
+```{r}
+is.na(x2)
+```
+
+```{r}
+jsonlite::fromJSON("https://data.ntpc.gov.tw/api/datasets/6EDAC837-9FC6-4A29-9824-9CEEBB270953/json/preview")-> gas
+```
+
+```{r}
+str(gas)
+gas$quantity[str_detect(gas$corporation,"欣欣")]
+gas$quantity <- as.integer(gas$quantity)
+```
+
+```{r}
+CDC_chatbox <- readr::read_csv("http://od.cdc.gov.tw/pr/CDC_chatbox.csv")
+```
+
+```{r}
+str(CDC_chatbox)
+factor(CDC_chatbox$Disease)->CDC_chatbox$Disease
+lung <- str_detect(CDC_chatbox$Disease,"肺炎")
+CDC_chatbox$Question[lung]
+```
+
+```{r}
+library(stringr)
+library(glue)
+```
+
+```{r}
+str_sub("410873002", 5, 6)
+date<-lubridate::ymd(
+  c(
+    "民國2019年12月05日",
+    "馬丁2019的12課05muydifícil",
+    "助教2019Emily12解說05真棒",
+    "2019R12課程05すごい",
+    "R程式2019的12期中考05とても変態"
+  )
+)
+
+character_date <- as.character.Date(date)
+```
+# target pattern
+[:digit:]{2,3}
+[0:9]{2,3}
+# target location
+(?<=民國)(?=年)
+
+```{r}
+str_extract(c("民國108年12月5日","民國98年10月5日"),"(?<=年)[0-9]{1,2}(?=月)")
+str_extract(c("apples x4", "bag of flour", "bag of sugar", "milk x2"), "\\b")
+```
+
+```{r}
+install.packages("htmlwidgets")
+heartSutra <- c("舍利子，色不異空，空不異色；色即是空，空即是色。")
+str_view_all(heartSutra,"色") # 檢視
+str_count(heartSutra,"色") # 計數
+```
+
+```{r}
+studentIds <- c("410873029","410773005","410772035","410562123")
+# 取出學號中的入學屆為107或108
+str_view_all(studentIds,"(107|108)")
+
+str_view_all(studentIds, "107|108") # 可不寫()
+
+# 是否來自107或108學屆
+str_detect(studentIds, "107|108")
+
+Ids <- c("A283743192","B829103720","A10920402","C291022384")
+
+str_view_all(Ids, "[AC]")
+str_detect(Ids, "[AC]") # 偵測 出現A、C
+str_extract(Ids,"[A-Z]") # 取出 A-Z的字元
+
+```
+
+```{r}
+strip1 <- "[0-9]"
+strip2 <- "(櫻桃|777|紅心)" # 字群組合strip因為等下放中間所以用()括起來
+strip3 <- "[A-Z]"
+myRegexSlotMachine <- paste0(strip1,strip2,strip3)
+print(myRegexSlotMachine)
+
+claimA <- "我得到A檸檬99"
+claimB <- "我的是7777Z"
+claimC <- "我玩了兩次，一次是7蘋果H，另一次是5紅心J"
+# 顯示吻合的出象
+str_view(
+  c(claimA,claimB,claimC),
+  pattern=myRegexSlotMachine
+)
+# 是否有吻合的出象
+str_detect(
+  c(claimA,claimB,claimC),
+  pattern=myRegexSlotMachine
+)
+
+```
+
+
+
+

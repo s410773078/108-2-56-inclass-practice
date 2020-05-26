@@ -1,0 +1,66 @@
+```{r}
+library(purrr)
+
+example <- list(
+  name=c("小明","小花","小新","美美"),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c("1998-03-11","1999-12-22","1995-08-22","2001-10-10")),
+  hobby=c("美食 旅遊","旅遊 時尚","3C 美食","音樂 旅遊"),
+  residence=c("Taipei","New Taipei","Taichung","Kaohsiung"),
+  allowance=factor(c("0-1000","1001-2000","2000+","1001-2000")),
+  bloodType=c("A","B","B","O")
+)
+
+pick_小新 <- example$name=="小新"
+data_selected <- 
+  list(
+    name=example$name[pick_小新],
+    weight=example$weight[pick_小新],
+    height=example$height[pick_小新],
+    hobby=example$hobby[pick_小新],
+    residence=example$residence[pick_小新],
+    allowance=example$allowance[pick_小新],
+    bloodType=example$bloodType[pick_小新]
+      )
+map(example,~.x[pick_小新])
+```
+
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1", simplifyDataFrame = F) -> dance
+```
+
+```{r}
+str(dance)
+map(dance,~.x$title) -> list_titles
+View(list_titles)
+length(dance[[1]]$showInfo)
+map(dance,~(length(.x$showInfo)))-> list_num_of_show
+
+map(dance[[4]]$showInfo,~.x$time)
+
+```
+
+```{r}
+map(dance[[8]]$showInfo,~.x$time)
+map(dance[[8]]$showInfo,~.x$location)
+```
+
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/5nozcipa3rzrrmy/busRoutes.json?dl=1", simplifyDataFrame = F) ->
+  busRoutes
+str(busRoutes)
+map(busRoutes,~.x$Id)
+```
+
+```{r}
+jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+str(weather_next36hours)
+
+weather_next36hours$cwbopendata$dataset$location$locationName
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,~.x$elementName) 
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,~.x$elementName)
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,~.x$time[[1]]$startTime)
+```
+

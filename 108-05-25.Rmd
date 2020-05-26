@@ -1,0 +1,106 @@
+---
+title: "108-05-23"
+output:
+
+---
+```{r}
+source("https://www.dropbox.com/s/qsrw069n94k61lj/transcript100to103_list.R?dl=1")
+str(transcript100to103)
+install.packages("lubridate")
+```
+```{r}
+transcript100to103[2]
+table(transcript100to103$學屆)
+above_85 <-transcript100to103$成績>85
+table(transcript100to103$學屆[above_85])
+```
+
+```{r}
+example <- list(
+  name=c("小明","小花","小新","美美"),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c("1998-03-11","1999-12-22","1995-08-22","2001-10-10")),
+  hobby=c("美食 旅遊","旅遊 時尚","3C 美食","音樂 旅遊"),
+  residence=c("Taipei","New Taipei","Taichung","Kaohsiung"),
+  allowance=factor(c("0-1000","1001-2000","2000+","1001-2000")),
+  bloodType=c("A","B","B","O")
+)
+
+class(example$birthday)
+str(example)
+after_1998<-example$birthday>=lubridate::ymd("1998-01-01")
+example$name[after_1998]
+
+
+```
+
+```{r}
+source("https://www.dropbox.com/s/16h6ggua6qtydci/exchangeRate.R?dl=1")
+```
+
+```{r}
+str(exchangeRate)
+pick_after98_01<-exchangeRate$期間>= lubridate::ymd("1998-01-01")
+
+exchangeRate_after98 <-
+  list(
+    `期間`=exchangeRate$`期間`[pick_after98_01],
+    `幣別`=exchangeRate$`幣別`[pick_after98_01],
+    `匯率`=exchangeRate$`匯率`[pick_after98_01]
+    
+  )
+```
+
+```{r}
+levels(example$allowance)
+example$allowance <- ordered(example$allowance)
+pickup_1000<- example$allowance>"0-1000"
+example$name[pickup_1000]
+
+example$allowance <-
+  factor(
+    example$allowance,
+    levels=c("0-1000", "1001-2000", "2000+"),
+    ordered = T # 設定為可排序factor
+  )
+```
+
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/3uijub7xheib405/list_victimAges_female.json?dl=1", simplifyDataFrame = F) -> list_victimAges_female
+```
+
+```{r}
+list_victimAges_female$數目 <-
+  as.integer(list_victimAges_female$數目)
+
+list_victimAges_female$年齡層 <- 
+  as.factor(list_victimAges_female$年齡層)
+
+str(list_victimAges_female)
+sum(list_victimAges_female$`數目`)
+sum(list_victimAges_female$`數目`, na.rm=T)
+
+
+levels(list_victimAges_female$年齡層)-> levels_ages
+levels_new<-c(levels_ages[c(12,13,1,8,2:7,9:11)])
+levels_ages
+levels(list_victimAges_female$年齡層) <- levels_new
+levels(list_victimAges_female$年齡層)
+```
+
+```{r}
+sum(list_victimAges_female$數目, na.rm=T)
+sum(list_victimAges_female$數目[pick_above30], na.rm = T)
+
+list_victimAges_female$年齡層   
+pick_above30 <- list_victimAges_female$年齡層>="30_39歲"
+
+list_victimAges_female$年齡層<-ordered(list_victimAges_female$年齡層)
+
+
+```
+
+
+
+
