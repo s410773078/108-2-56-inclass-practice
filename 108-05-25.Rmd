@@ -81,7 +81,6 @@ str(list_victimAges_female)
 sum(list_victimAges_female$`數目`)
 sum(list_victimAges_female$`數目`, na.rm=T)
 
-
 levels(list_victimAges_female$年齡層)-> levels_ages
 levels_new<-c(levels_ages[c(12,13,1,8,2:7,9:11)])
 levels_ages

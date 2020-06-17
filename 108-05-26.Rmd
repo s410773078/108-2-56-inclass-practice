@@ -147,7 +147,7 @@ y3 <- c(NA,"小華")
 ```
 
 ```{r}
-is.na(x2)
+str_count(is.na(x2))
 ```
 
 ```{r}
@@ -211,7 +211,7 @@ str_count(heartSutra,"色") # 計數
 ```{r}
 studentIds <- c("410873029","410773005","410772035","410562123")
 # 取出學號中的入學屆為107或108
-str_view_all(studentIds,"(107|108)")
+stringr::str_view(studentIds,"(107|108)")
 
 str_view_all(studentIds, "107|108") # 可不寫()
 
@@ -233,7 +233,7 @@ strip3 <- "[A-Z]"
 myRegexSlotMachine <- paste0(strip1,strip2,strip3)
 print(myRegexSlotMachine)
 
-claimA <- "我得到A檸檬99"
+claimA <- "我得到9紅心Z"
 claimB <- "我的是7777Z"
 claimC <- "我玩了兩次，一次是7蘋果H，另一次是5紅心J"
 # 顯示吻合的出象
@@ -249,6 +249,82 @@ str_detect(
 
 ```
 
+```{r}
+headline <- "資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。"
+
+# 顯示所有符合規則的
+str_view_all(headline, "謝陳官") # 固定字組
+str_count(headline,"謝陳官")
+
+str_view_all(headline, "[謝陳官]") # 有1個strip: 出象有3個可能字元 
+str_count(headline, "[謝陳官]")
+
+str_view_all(headline, "謝無雙|官求敗") # 有1個strip，出象有2個字組 
+str_count(headline, "謝無雙|官求敗")
+
+str_view_all(headline, "陳[^官]") # 固定字元＋有1個strip： 出象為排官的字元
+str_count(headline, "陳[^官]")
+
+```
+
+```{r}
+addresses <- c(
+  '臺中市后里區公館里尾社路385號',
+  '新竹市東區科學園路125號1樓'
+  )
+strip11 <- "[:digit:]{2,3}"
+strip22 <- "號"
+addresse_extract <- paste0(strip11,strip22)
+str_extract(addresses, addresse_extract )
+
+#法2
+strip1 <- "[0-9]"
+strip2 <- "[0-9]"
+strip3 <- "[0-9]"
+strip4 <- "號"
+myRegexSlotMachine <- paste0(strip1,strip2,strip3,strip4)
+str_extract(addresses, myRegexSlotMachine)
+```
+
+```{r}
+addresses <- c(
+  '臺中市后里區公館里尾社路385號',
+  '新竹市東區科學園路125號1樓',
+  '新竹市北區竹光路99號',
+  '金門縣金城鎮賢庵里山前33號',
+  '臺中市南屯區工業區二十四路23號1樓')
 
 
+strip1 <- "[0-9]+"
+strip2 <- "[0-9]{1,3}"
 
+str_extract(addresses, addresse_extract)
+str_extract(addresses, strip2)
+```
+
+```{r}
+# 目標是前面的唧唧
+phrase <- c("唧唧复唧唧")
+target_regex <- "唧唧"
+pattern <- glue("^{target_regex}")
+print(pattern)
+str_view(phrase, pattern) 
+pattern2 <- glue("{target_regex}$")
+str_view(phrase, pattern2)
+```
+
+```{r}
+install.packages("stringr")
+question <-"康熙23年5月6日"
+extract_year <- "(?<=康熙)[:digit:]{2,3}(?=年)"
+western_year<-as.character(as.integer(stringr::str_extract(question,extract_year))+1662)
+answer<- lubridate::ymd(stringr::str_replace(question,"(?<=康熙)[:digit:]{2,3}(?=年)",western_year))
+answer
+
+```
+
+```{r}
+extract_num
+question2 <- "qw14f67w"
+str_view(question2,"[:digit:]{1,2}")
+```

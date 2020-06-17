@@ -1,0 +1,46 @@
+---
+title: "108-06-16"
+output: html_notebook
+---
+
+```{r}
+studentGithubURLs <- c("https://github.com/student1/108-2-78-inclass-practice", "github.com/student2 / 108-2-56-inclass-practice", 
+    "https://github.com/student3/108-2-56-inclass-practice", "student4 / 108-2-56-inclass-practice", 
+    "student5")
+extract_0<-paste0("https://github.com/",
+       "[:graph:]+",
+       "/108-2-",
+       "(56|78)",
+       "-inclass-practice")
+extract_0
+str_extract(studentGithubURLs,extract_0)
+
+
+```
+
+
+```{r}
+midtermFilename <- c("exam1-410773888.rmd", "exam1410882888.Rmd", "410682999第一次期中考.Rmd", 
+    "期中考310573888.R")
+extract_1<-"(4|3)[:digit:]{8}"
+print(extract_1)
+str_extract(midtermFilename,extract_1)
+
+front_regex<-""
+target_regex<-""
+
+pattern<-"(?<=[34][:digit:]{3})[:digit:]{2}"
+pattern
+str_extract(midtermFilename,pattern)
+
+midtermFilename <- c(midtermFilename, "exam149975013.Rmd", "499770121stExam.Rmd")
+extract_1<-"[34][:digit:]{7}"
+str_extract(midtermFilename,extract_1)
+extract_2
+
+
+addresses <- c("臺中市后里區公館里尾社路385號", "新竹市東區科學園路125號1樓")
+extract_3 <- paste0("[:digit:]{3}","號")
+str_extract(addresses,extract_3)
+```
+
