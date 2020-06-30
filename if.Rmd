@@ -52,7 +52,21 @@ askSilly_weather("台南市",today())
 ```
 
 
+```{r}
+if(!exists("weather_next36hours")){
+    jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+    weather_next36hours
+  SOAR::Store(weather_next36hours) # 存在.R_cache environment中
+}
+```
 
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1") -> examSubmissionTime
+
+
+head(examSubmissionTime$section)
+head(examSubmissionTime$time)
+```
 
 
 
