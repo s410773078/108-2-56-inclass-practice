@@ -1,0 +1,60 @@
+
+```{r}
+check_package<-function(pkgName){
+  install.packages(as.character(pkgName))
+}
+check_package(pkgName)
+# 測試
+check_package("clipr")
+check_package("SOAR")
+```
+
+```{r}
+check_packages<-function(pkgsName){
+  install.packages(as.character(pkgsName))
+}
+
+
+
+# 測試
+check_packages(c("clipr","SOAR"))
+```
+
+
+```{r}
+locationInput<-"台南市"
+askSilly_weather <- function(locationInput,dateInput){
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+  
+  if(!require(jsonlite)){
+    install.packages("jsonlite")
+  }
+  
+   if(str_detect(locationInput,"台")){
+    str_replace(locationInput,"台","臺")->locationInput
+  }
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") ->
+    pick_MaxT
+  (weatherAtLocation$elementName=="MinT") ->
+    pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  
+ 
+  
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+askSilly_weather("台南市",today())
+```
+
+
+
+
+
+
+
+

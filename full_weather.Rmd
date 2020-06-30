@@ -1,0 +1,30 @@
+
+```{r}
+library(lubridate);library(purrr);library(glue)
+dateInput2 <- with_tz(ymd_hms("2020-07-01-07-00-00"),tzone = "UTC")
+locationInput <- "花蓮縣"
+
+jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+
+ask_weather<- function(dateInput,locationInput){
+  weather_next36hours$cwbopendata$dataset$location$locationName==locationInput-> location_confirm
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[location_confirm][[1]]->weather_at_location
+  weather_at_location[[2]][[2]]->MaxT
+  ymd_hms(MaxT$startTime)<with_tz(ymd_hms(dateInput),tzone = "UTC")->first
+  with_tz(ymd_hms(dateInput),tzone = "UTC")<ymd_hms(MaxT$endTime)->second
+  MaxT$parameter$parameterName[second&first]-> Max_final
+  glue::glue("{locationInput}MaxT at {ymd({dateInput})} is {Max_final}")
+  }
+ask_weather("2020-06-30-17-59-59","臺南市")
+```
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+```{r}
+demand_return<-
+  function(p){
+    q_d<- 10-5*p
+    return(q_d)
+  }
+```
+[] list
+[[]] c
+```{r}
+library(lubridate)
+dateInput <- lubridate::today()
+locationInput <- "新北市"
+
+jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+
+silly<- function(locationInput){
+weather_next36hours$cwbopendata$dataset$location$locationName==locationInput -> pick_location
+weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weather_at_picked
+weather_at_picked$elementName=="MinT" -> picked_min
+weather_at_picked$elementName=="MaxT" -> picked_max
+
+weather_at_picked$time[picked_max][[1]]$parameter$parameterName[[1]]->max_temp
+weather_at_picked$time[picked_min][[1]]$parameter$parameterName[[1]]->min_temp
+glue::glue("{locationInput}{dateInput}最高氣溫{max_temp}最低氣溫{min_temp}")
+}
+
+silly("花蓮縣")
+class(silly)
+formals(silly)
+body(silly)
+```
+
+```{r}
+dateInput <- today()
+locationInput <- "新北市"
+askSilly_weather <- function(locationInput,dateInput){
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") ->
+    pick_MaxT
+  (weatherAtLocation$elementName=="MinT") ->
+    pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+askSilly_weather("花蓮縣",today())
+```
+ # with_tz(x,tz=y)
+```{r}
+what_time_is_it<-function(zone){
+  with_tz(now(),tz=zone)->time_selected
+  return(time_selected)
+}
+what_time_is_it("Europe/Paris")
+```
+
+```{r}
+learning_topics <- 
+  list(
+    subject="函數",
+    date=lubridate::ymd("2020-06-03"),
+    functionsCreated=list(
+      demand=demand_return # 等號右邊是呼叫demand_return的定義值，也就是function(...){...}值定義本身。
+    )
+  )
+
+learning_topics$functionsCreated$demand(5)
+
+environment(silly)
+environment(demand_return)
+codetools::findGlobals(demand_return)
+```
+
+```{r}
+library(httr)
+library(magrittr)
+library(purrr)
+library(stringr)
+route<-916
+GET(glue::glue("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/{route}?$top=30&$format=JSON")) %>%
+  content -> estimatedArrivalTime_916
+
+GET(glue::glue("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/NewTaipei/{route}?$top=30&$format=JSON")) %>%
+  content -> routeInfo_916
+
+
+when_busArrives<- function(route_input,location_input){
+  route_selected<-map(estimatedArrivalTime_916,~.x["RouteName"]["Zh_tw"]==route_input)
+  location_selected<-map(estimatedArrivalTime_916,~.x["StopName"]["Zh_tw"]==location_input)
+  as.integer(route_selected)+as.integer(location_selected)->confirm
+  estimatedArrivalTime_916[confirm==2]->confirm_selected
+  unlist(map(confirm_selected,~.x["Direction"]))->final
+  estimatedArrivalTime<-list(
+  "去程"=confirm_selected[final==1][[1]]$EstimateTime,
+  "返程"=confirm_selected[final==0][[1]]$EstimateTime
+)
+
+  return(estimatedArrivalTime)
+}
+
+when_busArrives(916,"臺北大學正門")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

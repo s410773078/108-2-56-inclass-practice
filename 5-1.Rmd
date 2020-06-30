@@ -1,0 +1,81 @@
+```{r}
+
+threeHeigths <- c(Gary=178, John=182, Cam=175)
+sort(threeHeigths, decreasing=T) -> sorted_height
+names(sorted_height)->sorted_person
+
+sort(threeHeigths, decreasing=T)%>%
+names(.)%>%
+.[[1]]
+
+
+```
+
+```{r}
+library(magrittr);library(stringr);library(purrr)
+
+```
+
+```{r}
+# 由cities創出每個元素對應的北部、東部、中部region factor
+cities <- factor(c("台北","花蓮","台東","台中"))
+levels(cities)
+cities->reigon
+levels(reigon)%>%
+str_replace(.,"台北","北部")%>%
+str_replace(.,"花蓮|台東","東部")%>%
+str_replace(.,"台中","中部")->levels(reigon)
+levels(reigon) 
+```
+
+```{r}
+num <- c(2,97,22,15,7)
+
+# 選出大於50的數字
+(num > 50)%>%
+num[.]
+
+
+# 資料
+population <- c(`cityA`=500,`cityB`=1500, `cityC`=399)
+cities <- c("cityA","cityA","cityB","cityB","cityC")
+
+# 分析步驟
+names(sort(population))%>%
+factor(cities, levels = .)->cities 
+cities
+```
+
+```{r}
+dataList <- list(
+  num=c(2,97,22,15,7),
+  chr=c("2","97","22","15","7")
+)
+
+map(dataList,~is.numeric(.x))->result
+unlist(result)->pick_numeric
+dataList[pick_numeric]->num_element
+
+(num_element[[1]]>50)->pick_big
+num_element[[1]][pick_big]
+
+map(dataList,~is.numeric(.x))%>%
+  unlist(.)%>%
+  dataList[.]%>%
+  unlist(.)%>%
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
